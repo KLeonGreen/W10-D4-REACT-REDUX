@@ -1,4 +1,4 @@
-import { ADD_TO_FAVORITES } from "../actions";
+import { ADD_TO_FAVORITES, REMOVE_FAV } from "../actions";
 
 const initialState = {
   jobs: [],
@@ -10,6 +10,14 @@ export const favoriteReducer = (state = initialState, action) => {
       return {
         ...state,
         jobs: [...state.jobs, action.payload],
+      };
+
+    case REMOVE_FAV:
+      return {
+        ...state,
+        jobs: state.jobs.filter((job, i) => {
+          return i !== action.payload;
+        }),
       };
     default:
       return state;

@@ -1,5 +1,6 @@
 export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
 export const SEARCH_JOBS = "SEARCH_JOBS";
+export const REMOVE_FAV = "REMOVE_FAV";
 
 export const addToFavorites = (job) => {
   return {
@@ -8,12 +9,23 @@ export const addToFavorites = (job) => {
   };
 };
 
+export const removeFavorite = (i) => {
+  return {
+    type: REMOVE_FAV,
+    payload: i,
+  };
+};
+
 export const getJobs = (query) => {
   return async (dispatch, getState) => {
     try {
       const response = await fetch("https://strive-benchmark.herokuapp.com/api/jobs?search=" + query + "&limit=20");
       if (response.ok) {
-        let jobs = await response.json();
+        let data = await response.json();
+
+        const jobs = data.data;
+
+        console.log(data);
         dispatch({
           type: SEARCH_JOBS,
           payload: jobs,
